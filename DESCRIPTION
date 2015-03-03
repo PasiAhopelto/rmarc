@@ -1,0 +1,19 @@
+Package: rmarc
+Type: Package
+Title: MARC with R
+Version: 0.1
+Date: 
+Encoding: UTF-8
+Authors@R: 
+Maintainer: 
+Description: The rmarc package provides functions for reading and writing MARC files.
+Depends: 
+URL: 
+License: 
+LazyLoad: yes
+LazyData: yes
+Packaged: 
+Author: 
+NeedsCompilation: no
+Repository: CRAN
+Date/Publication: 
