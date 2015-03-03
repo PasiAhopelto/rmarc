@@ -1,2 +1,2 @@
 # rmarc
-MARC read and write library for GNU R
+Read and write MARC bibliographic record in GNU R.

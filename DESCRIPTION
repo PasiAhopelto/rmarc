@@ -4,12 +4,12 @@ Title: MARC with R
 Version: 0.1
 Date: 
 Encoding: UTF-8
-Authors@R: 
-Maintainer: 
+Authors@R: Pasi Ahopelto
+Maintainer: Pasi Ahopelto <pahopelt@gmail.com>
 Description: The rmarc package provides functions for reading and writing MARC files.
 Depends: 
 URL: 
-License: 
+License: ALv2
 LazyLoad: yes
 LazyData: yes
 Packaged: 
@@ -17,3 +17,4 @@ Author:
 NeedsCompilation: no
 Repository: CRAN
 Date/Publication: 
+Suggests: testthat
