@@ -12,6 +12,11 @@ test_that("corrupted input file causes error", {
     expect_error(read.marc(file = "../data/corrupted.dat"))
 })
 
+test_that("gives descriptive names to fields", {
+    record <- read.marc(file = "../data/record.dat")
+    expect_equal(colnames(record), c('record.number', 'field.number', 'field', 'first.indicator', 'second.indicator', 'subfield', 'value'))
+})
+
 # 1b data frame with absolute sequence number
 #
 # REC#  FIELD   FIELD#      I1  I2      SUB     VALUE
