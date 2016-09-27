@@ -1,4 +1,2 @@
-library(testthat)
-library(rmarc)
-
-test_check("rmarc")
+# TODO library(testthat)
+# TODO test_check("rmarc")
