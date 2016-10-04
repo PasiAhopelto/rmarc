@@ -1,21 +1,28 @@
-read.marc <- function(file) {
-    input <- file(file, 'rb')
-    leader <- readBin(input, 'raw', n=24)   # TODO check endianness
+read.marc <- function(filename) {
+    input <- file(filename, 'rb')
+    leader <- readBin(input, 'raw', 24)
+    recordLength <- read.parseMarcFileSize(leader)
+    recordWithoutLeader <- readBin(input, 'raw', recordLength - 24)
+    directory <- read.parseDirectory(recordWithoutLeader)
+    print(directory)
+    # TODO read directory
+    # TODO read fields
     close(input)
-    if(length(leader) == 0) {
-        warning(paste("Input file", file, "is empty"))
-    }
-    else {
-        if(read.parseMarcFileSize(leader) == file.size(file)) {
-            result <- data.frame(record.number = integer(0), field.number = integer(0), field = character(0),   first.indicator = character(0), second.indicator = character(0), subfield = character(0), value = character(0))
-        }
-        else {
-            stop(paste("Input file", file, " contains corrupted data")) 
-        }
-    }
+    NA
 }
 
-# Directory starts from 25 and continues with 12 character entries until 1E
+read.parseDirectory <- function(recordWithoutLeader) {
+    directory <- data.frame(tag = character(0), length = integer(0), position = integer(0))
+    entryStartPosition <- 1
+    while(entryStartPosition < length(recordWithoutLeader) && rawToChar(recordWithoutLeader[entryStartPosition]) != '\x1e') {
+        fieldTag <- rawToChar(recordWithoutLeader[entryStartPosition:(entryStartPosition+2)])
+        fieldLength <- rawToChar(recordWithoutLeader[(entryStartPosition+3):(entryStartPosition+6)])
+        fieldPosition <- rawToChar(recordWithoutLeader[(entryStartPosition+7):(entryStartPosition+11)])
+        entryStartPosition <- entryStartPosition + 12
+        directory <- rbind(directory, data.frame(fieldTag, fieldLength, fieldPosition))
+    }
+    directory
+}
 
 read.parseMarcFileSize <- function(leader) {
     size <- as.integer(intToUtf8(leader[1:5]))
